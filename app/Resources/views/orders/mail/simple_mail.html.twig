@@ -1,0 +1,14 @@
+{% block subject 'Bonjour,' ~ order.user.firstName ~' '~ order.user.lastName %}
+
+{% block body_text %}
+    {% autoescape false %}
+        <p>{{ message }}</p>
+    {% endautoescape %}
+{% endblock %}
+
+{% block body_html %}
+
+{% endblock %}
+
+
+

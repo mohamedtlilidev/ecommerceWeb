@@ -1,0 +1,211 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- Main content -->
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Commandes</span> -
+                        Liste</h4>
+                </div>
+            </div>
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dashboard') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="{{ path('orders_index') }}">Listes</a></li>
+                    <li class="active">Commandes</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+        <!-- Content area -->
+        <div class="content">
+            {% include 'messages.html.twig' %}
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Basic initialization -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Détails du client</h5>
+                            <div class="heading-elements">
+                                <input type="hidden" value="{{ order.id }}" id="order_id"/>
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list list-unstyled">
+                                {% if order.user.firstName is defined and order.user.lastName is defined%}
+                                <li>
+
+                                    Nom et prénom : {{ order.user.firstName }}&nbsp;{{ order.user.lastName }}
+                                </li>
+                                {% endif %}
+                                <li>
+                                    Email : {{ order.user.email }}
+                                </li>
+                                 {% if order.user.phone %}
+                                     <li>
+                                        Tél : {{ order.user.phone }}
+                                     </li>
+                                 {% endif %}
+                                <li>
+                                {% if order.user.type=="2" %}
+                                    Type : <label class="label label-info">Diplomate</label></br>
+                                {% else %}
+                                    Type : <label class="label label-info">Passager</label>
+                                {% endif %}
+                                </li>
+                                <li>
+                                    Date d'inscription : {{ order.user.createdOn|date('Y-m-d H:i:s') }}
+                                </li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Basic initialization -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Adresse de livraison</h5>
+                            <div class="heading-elements">
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <ul class="list list-unstyled">
+                                    <li>Alias : {{ order.address.alias }}</li>
+                                    <li>Nom et prénom : {{ order.address.firstName }}&nbsp;{{ order.address.lastName }}</li>
+                                    <li>Adresse 1 : {{ order.address.address1 }}</li>
+                                    {% if order.address.address2 %}
+                                        <li>Adresse 1 : {{ order.address.address2 }}</li>
+                                    {% endif %}
+                                    <li>Ville:  {{ order.address.city }}</li>
+                                    <li>Pays : {{ order.address.country }}</li>
+                                    <li>Tél : {{ order.address.phone }}</li>
+                                    {% if order.address.other %}
+                                    <li>Informations complémentaires : {{ order.address.other }}</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel invoice-grid">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <h6 class="text-semibold no-margin-top">Détails de la commande</h6>
+                                    <ul class="list list-unstyled">
+                                        <li>Référence #: &nbsp;{{ order.reference }}</li>
+                                        <li>Etat : <label class="label-info label" id="status_info_order">{{ order.status }}</label> </li>
+                                        <li>Date de la commande : <span class="text-semibold">{% if order.createdTime %}{{ order.createdTime|date('Y-m-d H:i:s') }}{% endif %}</span></li>
+                                        <li>Methode de payement: <span class="text-semibold">{{ order.paymentMethod }}</span></li>
+                                    </ul>
+
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <h6 class="text-semibold text-right no-margin-top">{{ order.amount|number_format(2, '.', ',') }}&nbsp;{{ order.currency }}</h6>
+
+
+                                    <form  method="post">
+                                        <div class="form-group">
+                                            <label class="control-label">Changer : &nbsp;</label>
+                                            <select name="status" id="status_order" class="select" data-placeholder="Select status">
+                                                {% for statu in status %}
+                                                    <option value="{{ statu.id }}" {% if statu.id==order.status.id %}selected="selected"{% endif %} data-cancel="{{ statu.defaultCancel }}">{{ statu.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-lg">
+                                            <thead>
+                                            <tr>
+                                                <th>id</th>
+                                                <th>Nom</th>
+                                                <th>Description</th>
+                                                <th>Quantité</th>
+                                                <th>Prix unitaire</th>
+                                                <th>Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {%  for item in order.items %}
+                                                <tr>
+                                                    <td>
+                                                        <h6 class="no-margin">{{ item.article.id }}</h6>
+                                                    </td>
+                                                    <td>{{ item.article.name }}</td>
+                                                    {% autoescape false %}
+                                                        <td>{{ item.article.htmlName }}</td>
+                                                    {% endautoescape %}
+                                                    <td>{{ item.quantity }}</td>
+                                                    <td>{{ item.article.price|number_format(2, '.', ',')}}</td>
+                                                    <td><span class="text-semibold">{{ (item.quantity *item.article.price)|number_format(2, '.', ',') }} {{ item.article.currency }}</span></td>
+                                                </tr>
+                                            {% endfor %}
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Basic initialization -->
+                    <div class="panel panel-flat">
+                        <div class="panel-heading">
+                            <h5 class="panel-title"></h5>
+                            <div class="heading-elements">
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="form_send_mail" method="post">
+                            <div class="form-group">
+                                <input type="hidden" required="required" name="subject" id="subject" class="form-control content-group" placeholder="Objet du mail" value="Service Client Hamila"/>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="enter-message" required="required" id="message" class="form-control content-group" rows="3" cols="1" placeholder="Enter votre message..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 text-right">
+                                    <button type="button" id="send_mail" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> Envoyer un mail</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <!-- /content area -->
+        {{  macros.modalMessage('message_cancel','bg-info','Envoyer un mail à votre client','send_cancel_message') }}
+    </div>
+    <!-- /main content -->
+{% endblock %}

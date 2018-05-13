@@ -1,0 +1,56 @@
+gestion_utilisateur: Gestion des Utilisateurs
+gestion_produits: Gestion des Produits
+gestion_couvertures: Gestion des couvertures
+gestion_actualites: Gestion des actualités
+gestion_pages: Gestion des pages
+gestion_commentaires : Gestion des commentaires
+gestion_reseaux : Gestion des reseaux
+accueil: Accueil
+utilisateurs: Utilisateurs
+langues: Langues
+pages: Pages
+simulateur: Simulateur
+pages_translate: Pages traduction
+slides: Slides
+slides_translate: Slides traduction
+covers: Couvertures
+covers_translate: Couvertures traduction
+sections: Sections
+sections_translate: Sections traduction
+networks: Réseaux
+networks_translate: Réseaux traduction
+article: Articles
+article_translate: Articles traduction
+tags: Tags
+rubric: Rubriques
+rubric_translate: Rubriques traduction
+product: Produits
+product_translate: Produits traduction
+comment: Commentaires
+faq: Faqs
+product_group: Groupe de produits
+faq_translate: Faqs traduction
+create_language: Créer
+liste_utilisateurs: Liste
+edit_utilisateurs: Edition
+edit: Edition
+create: Créer
+liste: Liste
+lire_plus: LIRE PLUS
+welcome: Welcome!
+arabic: عربي
+Previous: précédent
+change_code: Code
+change_libelle: Libellé
+change_devise: Devise
+change_unite: Unité
+change_achat: Achat
+change_vente: Vente
+parametres: parametres
+profile_settings: Profile
+#front
+
+devenir_client:  DEVENIR CLIENT
+prise_rendez_vous: PRISE DE RENDEZ-VOUS
+demande_recu: Votre demande a été reçue et se trouve en attente d'approbation !
+captcha_incorrect: La réponse saisie pour le captcha est incorrecte !

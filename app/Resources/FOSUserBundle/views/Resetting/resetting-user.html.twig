@@ -1,0 +1,73 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+
+{% block fos_user_content %}
+
+    <!-- Form with validation -->
+    <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" class="form-validate" method="POST">
+
+
+        <div class="panel panel-body login-form">
+            <div class="text-center">
+                <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+                <h5 class="content-group">Mot de passe oubliée</h5>
+
+            </div>
+            {% if (expired is defined) and expired %}
+                <p class="content-group">Lien expirée demander une autre fois le mot de passe <a class="text-info"
+                                                                                                 href="http://www.dutyfree.com.tn/preprod">http://www.dutyfree.com.tn</a>
+                </p>
+            {% elseif (error is defined) %}
+                <p class="content-group">Une erreur suvenue essayer une autre fois <a class="text-info"
+                                                                                      href="http://www.dutyfree.com.tn/preprod">http://www.dutyfree.com.tn</a>
+                </p>
+            {% elseif (success is defined) %}
+                <p class="content-group">Votre mot de passe est bien est reinitialisé avec succés <a class="text-info"
+                                                                                                     href="http://www.dutyfree.com.tn/preprod">http://www.dutyfree.com.tn</a>
+                </p>
+            {% else %}
+
+                <span class="validation-error-label">{{ form_errors(form.plainPassword.first) }}</span>
+                <span class="validation-error-label">{{ form_errors(form.plainPassword.second) }}</span>
+                <div class="form-group">
+                    <div class="row">
+                        {{ form_label(form.plainPassword.first,null,
+                        {'label':'Nouveau mot de passe','label_attr':{'class':'col-lg-12 control-label required'}}) }}
+
+                        <div class="col-lg-12">
+                            {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control','required':'required'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        {{ form_label(form.plainPassword.second,null,
+                        {'label':'Répéter le nouveau mot de passe','label_attr':{'class':'col-lg-12 control-label required'}}) }}
+
+                        <div class="col-lg-12">
+                            {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control','required':'required'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group login-options">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <a href="{{ path('fos_user_security_login') }}">Retour</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" id="_submit" class="btn bg-blue btn-block" name="_submit">Valider <i
+                                class="icon-arrow-right14 position-right"></i></button>
+
+                </div>
+                {{ form_rest(form) }}
+            {% endif %}
+
+        </div>
+    </form>
+    <!-- /form with validation -->
+
+
+{% endblock %}
+

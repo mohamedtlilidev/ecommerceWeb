@@ -1,0 +1,15 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% block subject %}
+{%- autoescape false -%}
+<p>Merci pour votre inscription sur <a href="http://www.dutyfree.com.tn">http://www.dutyfree.com.tn</a> !</p>
+</br>
+<p>Login : {{ user.username }}</p>
+</br>
+<p>Mot de passe : {{ user.plainPassword }}</p>
+{%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+
+{% endblock %}
+{% block body_html %}{% endblock %}

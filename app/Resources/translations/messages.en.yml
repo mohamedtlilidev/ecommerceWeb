@@ -1,0 +1,25 @@
+#admin
+create_language: Add
+liste_utilisateurs: List
+edit_utilisateurs: Edit
+edit: Edit
+create: Add
+liste: List
+welcome: Welcome!
+parametres: parameters
+invalid_password: Invalid confirmation password (8 characters; uppercase different, lower case, special characters).
+email_exists: email already exists
+users: Users
+clients: Clients
+partners: partners
+category: Category
+industry_category: Industry Category
+companies: Partners
+category: Product Category
+module: Module
+profile_settings: Profile Settings
+product: Products
+customers: Customers
+audit_location: Audit location
+#front
+

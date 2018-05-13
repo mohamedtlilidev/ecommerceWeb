@@ -1,0 +1,77 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="content">
+        <form class="form-horizontal form-validate-jquery"  method="post" enctype="multipart/form-data">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Modifer</h5>
+
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <fieldset>
+                                <legend class="text-semibold"><i class="icon-reading position-left"></i>Mon profil</legend>
+                                <div class="form-group">
+                                    <span class="validation-error-label">{{ form_errors(form.username) }}</span>
+                                    {{ form_label(form.username,null,
+                                    {'label':'Login','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(form.username, { 'attr': {'class': 'form-control','required':'required'}}) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="validation-error-label">{{ form_errors(form.email) }}</span>
+                                    {{ form_label(form.email,null,
+                                    {'label':'E mail','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(form.email, { 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="validation-error-label">{{ form_errors(form.current_password) }}</span>
+                                    {{ form_label(form.current_password,null,
+                                    {'label':'Mot de passe courant','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(form.current_password, { 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="validation-error-label">{{ form_errors(form.plainPassword.first) }}</span>
+                                    {{ form_label(form.plainPassword.first,null,
+                                    {'label':'Nouveau mot de passe','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-7">
+                                        {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <button type="button" id="generate_password" class="btn border-slate text-slate-800 btn-flat"><i class="icon-reload-alt"></i>Générer</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <span class="validation-error-label">{{ form_errors(form.plainPassword.second) }}</span>
+                                    {{ form_label(form.plainPassword.second,null,
+                                    {'label':'Répeter le mot de passe','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-7">
+                                        {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+
+
+                    </div>
+                    {{ form_rest(form) }}
+                    <div class="text-right">
+                        <input type="submit" value="Modifier" class="btn btn-primary"/>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

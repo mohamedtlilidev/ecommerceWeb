@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Article</span> - Liste</h4>
+                </div>
+
+
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Dashboard</li>
+                </ul>
+
+                <!--ul class="breadcrumb-elements">
+                    <li><a href="#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-gear position-left"></i>
+                            Settings
+                            <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+                            <li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+                            <li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+                        </ul>
+                    </li>
+                </ul-->
+            </div>
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+
+            {% include 'messages.html.twig' %}
+            <!-- Basic initialization -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Liste des categories</h5>
+
+
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li><a class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom" href="{{ path('category_create') }}" title="Ajouter une category"><i class="icon-plus3"></i></a></li>
+                            <!--li><a data-action="reload"></a></li-->
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="panel-body">
+
+                </div>
+
+                <table class="table datatable-row-full">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Position</th>
+                        <th class="text-center">Id</th>
+                        <th class="text-center">Produits</th>
+                        <th class="text-center">Nom fr</th>
+                        <th class="text-center">Nom En</th>
+                        <th class="text-center">Active</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for category in categories %}
+                        <tr>
+                            <td class="text-center">{{ category.rank }}</td>
+                            <td class="text-center">{{ category.id }}</td>
+                            <td class="text-center"><span class="label label-info">{{ category.articles.count }}</span></td>
+                            <td class="text-center">{{ category.nameFr }}</td>
+                            <td class="text-center">{{ category.nameEn }}</td>
+                            <td class="text-center">
+                                {% if category.isPublished %}<span class="label label-success">Oui</span>{% else %}<span class="label label-default">Non</span>{% endif %}
+                            </td>
+                            <td class="text-center">
+                                <ul class="icons-list icons-list-extended text-nowrap">
+                                    <li><a href="#" data-popup="tooltip" title="Supprimer" data-toggle="modal" data-target="#deleteModal"  data-path-delete="{{ path('category_delete', {'id': category.id }) }}" data-name-item="{{ category.nameFr }}"><i class="icon-cross2 text-danger"></i></a></li>
+                                    <li><a href="{{ path('category_edit', {'id': category.id }) }}" title="Edit"><i class="icon-file-text2"></i></a></li>
+                                </ul>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+            <!-- /basic initialization -->
+            <div class="modal fade" id="deleteModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Nom de la category</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Etes vous sure de bien vouloir supprimer cette category ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="deleteAction" type="button" class="btn btn-danger">Valider</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+
+
+    
+{% endblock %}

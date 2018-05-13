@@ -1,0 +1,265 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Article</span> -
+                        Liste</h4>
+                </div>
+
+
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Dashboard</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+            {% include 'messages.html.twig' %}
+            <!-- Basic initialization -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Liste des articles</h5>
+
+
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li>
+                                <a class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"
+                                   href="{{ path('article_new') }}" title="Ajouter un nouveau produit"><i
+                                            class="icon-plus3"></i></a></li>
+                            <!--li><a data-action="reload"></a></li-->
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="panel-body">
+                    <form class="form-horizontal" action="{{ path('article_index',{page:1}) }}" method="post"
+                          id="form_filters">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <select class="form-control" name="category_search">
+                                            <option value="">Filtrer par catégorie</option>
+                                            {% for category in categories %}
+                                                <option value="{{ category.id~'-parent' }}"
+                                                        {% if app.request.get('category_search')== category.id~'-parent' %}selected="selected"{% endif %}
+                                                        class="optgroup">{{ category.nameFr }}
+                                                    &nbsp;{% if category.articles.count >0 %}({{ category.articles.count }}){% endif %}
+                                                </option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <select class="form-control" name="brand_search">
+                                            <option value="">Filtrer par fabricant</option>
+                                            {% for brand in brands %}
+                                                <option value="{{ brand.brand }}"
+                                                        {% if app.request.get('brand_search')== brand.brand %}selected="selected"{% endif %}>{{ brand.brand }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control"
+                                               value="{% if app.request.get('code_search') %}{{ app.request.get('code_search') }}{% endif %}"
+                                               placeholder="Par code, nom" name="code_search"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="checkbox">
+                                    <label for="isNew">Nouveauté</label>
+                                    <input type="checkbox" id="isNew" name="isNew"
+                                           class="styled" {% if app.request.get('isNew') %}checked="checked"{% endif %}>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="checkbox">
+                                    <label for="isFragrance">Top fragrance</label>
+                                    <input type="checkbox" id="isFragrance" name="isFragrance"
+                                           class="styled" {% if app.request.get('isFragrance') %}checked="checked"{% endif %}>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="checkbox">
+                                    <label for="isOffer">Idée cadeaux</label>
+                                    <input type="checkbox" id="isOffer" name="isOffer"
+                                           class="styled" {% if app.request.get('isOffer') %}checked="checked"{% endif %}>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="checkbox">
+                                    <label for="isSpecial">Offre spécial</label>
+                                    <input type="checkbox" id="isSpecial" name="isSpecial"
+                                           class="styled"  {% if app.request.get('isSpecial') %}checked="checked"{% endif %}>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 text-right">
+                            <a type="button" href="{{ path('article_index') }}" id="reset_filter"
+                               class="btn btn-success">Initialiser</a>
+                            <input type="submit" value="Lancer la recherche" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <table class="table datatable-basic dataTable">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Image</th>
+                        <th class="text-center">Code</th>
+                        <th class="text-center">Nom</th>
+                        <th class="text-center">Fabricant</th>
+                        <th class="text-center">Prix</th>
+                        <th class="text-center">Categorie</th>
+                        <th class="text-center">Publique</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for article in articles %}
+                        <tr>
+
+                            <td class="text-center">
+                                <div class="thumbnail" style="width:100px; height: 100px;">
+                                    <a href="{{ asset('img/p/' )~ article.urlPicture }}" data-popup="lightbox">
+                                        <img src="{{ asset('img/p/') ~ article.urlPicture }}">
+
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="text-center">{{ article.code }}</td>
+                            <td class="text-center">{{ article.name }}</td>
+                            <td class="text-center">{{ article.brand }}</td>
+                            <td class="text-center">{{ article.price }}</td>
+                            <!--<td>{% if article.isOffer %}Yes{% else %}No{% endif %}, {% if article.isSpecial %}Yes{% else %}No{% endif %}, {% if article.isNew %}Yes{% else %}No{% endif %}</td>-->
+                            <!--<td>{{ article.rank }}</td>-->
+                            <td class="text-center">{% if article.category %} {{ article.category.nameFr }} {% endif %}</td>
+                            <td class="text-center">
+                                {% if article.isPublished %}
+                                    <label class="label-success label"><a href="{{ path('article_status', {'id': article.id }) }}" title="Bloqué"><i class="icon-checkmark text-blank"></i></a></label>
+                                {% else %}
+
+                                    <label class="label-danger label"><a href="{{ path('article_status', {'id': article.id }) }}" title="Débloqué"><i class="icon-cross3 text-blank"></i></a></label>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <ul class="icons-list icons-list-extended text-nowrap">
+                                    <li><a href="#" data-popup="tooltip" title="Supprimer" data-toggle="modal"
+                                           data-target="#deleteProduct"
+                                           data-path-delete="{{ path('article_delete', {'id': article.id }) }}"
+                                           data-name-product="{{ article.name }}"><i
+                                                    class="icon-cross2 text-danger"></i></a></li>
+                                    <li><a href="{{ path('article_clone', {'id': article.id }) }}" title="Duppliquer"><i
+                                                    class="icon-copy4 text-primary"></i></a></li>
+                                    <li><a href="{{ path('article_edit', {'id': article.id }) }}" title="Edit"><i
+                                                    class="icon-file-text2"></i></a></li>
+
+                                    <!--li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li-->
+                                </ul>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                    <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="dataTables_info">
+                                Showing {% if pagination.page>1 %}{{ (pagination.page-1)*pagination.max_per_page }}{% else %}1{% endif %}
+                                to {{ pagination.page*pagination.max_per_page }} of {{ pagination.nb_products }} entries
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagination_bottom">
+                                <div class="pagination-buttons">
+                                    {% if pagination.page>1 %}
+                                        <a class="paginate" href="{{ path(pagination.route,
+                                        pagination.route_params|merge({'page': 1})) }}"><<</a>
+                                        <a class="paginate" href="{{ path(pagination.route,
+                                        pagination.route_params|merge({'page': pagination.page-1})) }}"><</a>
+                                    {% endif %}
+                                    {#display p numbers only from p-3 to p+3 but don't go <1 or >pages_count#}
+                                    {% for p in range(max(pagination.page-3, 1),
+                                    min(pagination.page+3, pagination.pages_count)) %}
+                                        <a{% if p == pagination.page %} class="paginate_button current"{% else %} class="paginate_button paginate"{% endif %}
+                                                href="{{ path(pagination.route,
+                                                pagination.route_params|merge({'page': p})) }}">{{ p }}</a>
+                                    {% endfor %}
+                                    {% if pagination.page<pagination.pages_count %}
+                                        <a class="paginate" href="{{ path(pagination.route,
+                                        pagination.route_params|merge({'page': pagination.page+1})) }}">></a>
+                                        <a class="paginate" href="{{ path(pagination.route,
+                                        pagination.route_params|merge({'page': pagination.pages_count})) }}">>></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    </tfoot>
+                </table>
+
+
+            </div>
+            <!-- /basic initialization -->
+            <div class="modal fade" id="deleteProduct">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Supprimer le produit</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Etes vous sure de bien vouloir supprimer ce produit ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="deleteAction" type="button" class="btn btn-danger">Valider</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+
+{% endblock %}

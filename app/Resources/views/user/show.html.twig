@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ user.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ user.phone }}</td>
+            </tr>
+            <tr>
+                <th>Function</th>
+                <td>{{ user.function }}</td>
+            </tr>
+            <tr>
+                <th>State</th>
+                <td>{{ user.state }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ user.type }}</td>
+            </tr>
+            <tr>
+                <th>Consularcard</th>
+                <td>{{ user.consularCard }}</td>
+            </tr>
+            <tr>
+                <th>Isbanned</th>
+                <td>{% if user.isBanned %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Isfake</th>
+                <td>{% if user.isFake %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Subscribed</th>
+                <td>{% if user.subscribed %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdon</th>
+                <td>{% if user.createdOn %}{{ user.createdOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedon</th>
+                <td>{% if user.updatedOn %}{{ user.updatedOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('user_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('user_edit', { 'id': user.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

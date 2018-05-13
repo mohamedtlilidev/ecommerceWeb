@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ article.code }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ article.name }}</td>
+            </tr>
+            <tr>
+                <th>Htmlname</th>
+                <td>{{ article.htmlName }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ article.price }}</td>
+            </tr>
+            <tr>
+                <th>Solde</th>
+                <td>{{ article.solde }}</td>
+            </tr>
+            <tr>
+                <th>Isoffer</th>
+                <td>{% if article.isOffer %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Isspecial</th>
+                <td>{% if article.isSpecial %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Isnew</th>
+                <td>{% if article.isNew %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Urlpicture</th>
+                <td>{{ article.urlPicture }}</td>
+            </tr>
+            <tr>
+                <th>Ispublished</th>
+                <td>{% if article.isPublished %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Rank</th>
+                <td>{{ article.rank }}</td>
+            </tr>
+            <tr>
+                <th>Createdby</th>
+                <td>{{ article.createdBy }}</td>
+            </tr>
+            <tr>
+                <th>Createdon</th>
+                <td>{% if article.createdOn %}{{ article.createdOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedon</th>
+                <td>{% if article.updatedOn %}{{ article.updatedOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('article_index',{'page':1})}}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('article_edit', { 'id': article.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

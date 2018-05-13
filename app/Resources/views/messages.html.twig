@@ -1,0 +1,28 @@
+                    {% if app.session.flashBag.has('update_success') %}
+                        <div class="alert alert-success">
+                            {% for msg in app.session.flashBag.get('update_success') %}
+                                {{ msg }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if app.session.flashBag.has('add_success') %}
+                        <div class="alert alert-success">
+                            {% for msg in app.session.flashBag.get('add_success') %}
+                                {{ msg }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if app.session.flashBag.has('delete_success') %}
+                        <div class="alert alert-success">
+                            {% for msg in app.session.flashBag.get('delete_success') %}
+                                {{ msg }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if app.session.flashBag.has('danger') %}
+                        <div class="alert alert-danger">
+                            {% for msg in app.session.flashBag.get('danger') %}
+                                {{ msg }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}

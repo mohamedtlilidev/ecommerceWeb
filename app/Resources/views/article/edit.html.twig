@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="content">
+        <form class="form-horizontal form-validate-jquery" method="post" enctype="multipart/form-data">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Ajouter un article</h5>
+
+                </div>
+                <div class="panel-body">
+                    {{ form_errors(edit_form) }}
+                    <div class="row">
+
+                        {{ form_errors(edit_form) }}
+                        <div class="col-md-6">
+                            <fieldset>
+                                <legend class="text-semibold"><i class="icon-reading position-left"></i>Information
+                                    générales
+                                </legend>
+
+                                <div class="form-group">
+                                    {{ form_label(edit_form.code,null,
+                                    {'label':'Code article','label_attr':{'class':'col-lg-3 control-label'}}) }}
+
+                                    <div class="col-lg-9">
+                                        {{ form_widget(edit_form.code, { 'attr': {'class': 'form-control','required':'required'}}) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    {{ form_label(edit_form.name,null,
+                                    {'label':'Nom','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(edit_form.name, { 'attr': {'class': 'form-control','required':'required'}}) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(edit_form.htmlName,null,
+                                    {'label':'Description','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(edit_form.htmlName, { 'attr': {'class': 'form-control wysihtml5-default','rows':10,'cols':10}}) }}
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    {{ form_label(edit_form.urlPicture,null,
+                                    {'label':'Image associé','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+
+                                        {{ form_widget(edit_form.urlPicture, { 'attr': {'class': 'file-styled'}}) }}
+                                        {% if article.urlPicture %}
+                                            <div class="thumb_product">
+
+                                                <img class="thumbnail_product"
+                                                     src="{{ asset('img/p/') ~ article.urlPicture }}" width="150"
+                                                     height="150">
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3">
+                                        <div class="checkbox">
+                                            {{ form_label(edit_form.isNew,null,
+                                            {'label':'Article Nouveau'}) }}
+
+                                            {{ form_widget(edit_form.isNew,{'attr':{'class':'styled'}}) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="checkbox">
+                                            {{ form_label(edit_form.isOffer,null,
+                                            {'label':'Article offert'}) }}
+
+                                            {{ form_widget(edit_form.isOffer,{'attr':{'class':'styled'}}) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3">
+                                        <div class="checkbox">
+                                            {{ form_label(edit_form.isSpecial,null,
+                                            {'label':'Article spécial'}) }}
+
+                                            {{ form_widget(edit_form.isSpecial,{'attr':{'class':'styled'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group ">
+                                    <div class="col-lg-6">
+                                        <div class="checkbox">
+                                            {{ form_label(edit_form.isPublished,null,
+                                            {'label':'Disponible à la vente'}) }}
+                                            {{ form_widget(edit_form.isPublished, { 'attr': {'class': 'styled'}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-6">
+                            <fieldset>
+                                <legend class="text-semibold"><i class="icon-truck position-left"></i>Assocation et prix
+                                </legend>
+
+                                <div class="form-group">
+                                    {{ form_label(edit_form.price,null,
+                                    {'label':'Prix HT','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(edit_form.price, { 'attr': {'class': 'form-control','required':'required'}}) }}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(edit_form.rank,null,
+                                    {'label':'Quantité','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(edit_form.rank, { 'attr': {'class': 'form-control','min':0}}) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form_label(edit_form.solde,null,
+                                    {'label':'Solde en %','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(edit_form.solde, { 'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group" {% if article.category==null %}{% endif %}>
+                                    {{ form_label(edit_form.category,null,
+                                    {'label':'Category','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {% if article.category==null %}
+                                            {{ form_widget(edit_form.category, { 'attr': {'class':'form-control category_select','data-placeholder': 'Choisir votre category'}}) }}
+                                        {% else %}
+                                            {{ form_widget(edit_form.category, { 'attr': {'class':'form-control category_select','data-placeholder': 'Choisir votre category','required':'required'}}) }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {{ form_label(edit_form.brand,null,
+                                    {'label':'Fabricant','label_attr':{'class':'col-lg-3 control-label'}}) }}
+                                    <div class="col-lg-9">
+                                        {{ form_widget(edit_form.brand, { 'attr': {'class':'form-control','data-placeholder': 'Choisir votre brand'}}) }}
+                                    </div>
+                                </div>
+
+
+                            </fieldset>
+                        </div>
+                    </div>
+                    {{ form_rest(edit_form) }}
+                    <div class="text-right">
+                        <input type="submit" value="Mettre à jour" class="btn btn-primary"/>
+
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

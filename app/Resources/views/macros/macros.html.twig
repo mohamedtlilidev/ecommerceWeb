@@ -1,0 +1,145 @@
+{% macro dataTable(path,columns,orderNumDefault=0,orderByDefault="desc") %}
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_data_sources.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pages/components_popups.js') }}"></script>
+    <script>
+        var dataTable;
+        $(function () {
+            dataTable = $('#myTable').DataTable({
+                ajax: {
+                    url: '{{ path(path) }}',
+                    type: "POST"
+                },
+                "order": [[ {{ orderNumDefault }},"{{ orderByDefault }}"]],
+                columns: [{{ columns|raw }}]
+            });
+            $('.dataTables_length select').select2({
+                minimumResultsForSearch: Infinity,
+                width: 'auto'
+            });
+            $('.dataTables_filter input[type=search]').attr('placeholder','Type to filter...');
+        });
+    </script>
+
+{% endmacro %}
+{% macro modalMessage(id,bg,title,id_action) %}
+    <!-- Info modal -->
+    <div id="{{ id }}" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header {{ bg }}">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">{{ title }}</h6>
+                </div>
+
+                <div class="modal-body">
+                    <h6 class="text-semibold">Message</h6>
+                    <div class="form-group">
+                        <textarea name="enter-message" required="required" id="message" class="form-control content-group" rows="3" cols="1" placeholder="Enter votre message..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Fermer</button>
+                    <button type="button" id="{{ id_action }}" class="btn btn-info">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /info modal -->
+{% endmacro %}
+
+{% macro deleteAction(path,text=null) %}
+    <a href="#" data-popup="tooltip" class="deleteItem" data-path="{{ path }}" title="Remove"><i class="icon-trash"></i> {{ text }}</a>
+{% endmacro %}
+{% macro showAction(path,text=null) %}
+    <a href="{{ path }}" data-popup="tooltip" class="showItem" data-path="{{ path }}" title="Répondre"><i class="icon-reload-alt"></i> {{ text }}</a>
+{% endmacro %}
+{% macro deleteRedirectionAction(path,text=null) %}
+    <a href="#" data-popup="tooltip" class="deleteRedirectionItem" data-path="{{ path }}" title="Remove"><i class="icon-trash"></i> {{ text }} </a>
+{% endmacro %}
+{% macro action(path,class=null,text=null) %}
+    <a href="{{ path }}" data-popup="tooltip" title="{{ text }}"><i class="{{ class }}"></i> {{ text }}</a>
+{% endmacro %}
+{% macro updateAction(path) %}
+    <a href="{{ path }}" data-popup="tooltip" title="Edit"><i class="icon-pencil7"></i></a>
+{% endmacro %}
+{% macro addItem(text,path) %}
+    <a href="{{ path }}" type="button" class="btn btn-primary"><i class="icon-plus3 position-left"></i>{{ text }}</a>
+{% endmacro %}
+{% macro submitForm() %}
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">Submit form <i class="icon-arrow-right14 position-right"></i>
+        </button>
+    </div>
+{% endmacro %}
+{% macro filtreForm(class) %}
+    <div class="{{ class }}">
+        <div class="form-group">
+            <label>
+                &nbsp;
+            </label>
+            <button type="submit" class="btn btn-block btn-primary">Search <i class="icon-arrow-right14 position-right"></i>
+            </button>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro headingDatatatble(title,path_add) %}
+
+    <div class="panel-heading">
+        <h5 class="panel-title">{{ title }}</h5>
+        <div class="heading-elements">
+            <ul class="icons-list">
+                <li><a class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom" href="{{ path(path_add) }}" title="Ajouter une category"><i class="icon-plus3"></i></a></li>
+                <!--li><a data-action="reload"></a></li-->
+
+            </ul>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro form_widget_input(form_label,form_widget,label,attr_label,attr_widget) %}
+
+    <div class="form-group">
+        {{ form_label(attr_label,null,
+        {'label':label,'label_attr':{'class':'col-lg-3 control-label'}}) }}
+        <div class="col-lg-9">
+            {{ form_widget(attr_widget, { 'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro form_widget_select(form_label,form_widget,label,attr_label,attr_widget,class_label,class_form,place_holder) %}
+
+    <div class="form-group">
+        {{ form_label(attr_label,null,
+        {'label':label,'label_attr':{'class':class_label}}) }}
+        <div class="col-lg-9">
+            {{ form_widget(attr_widget, { 'attr': {'class':class_form,'data-placeholder':place_holder,'required':'required'}}) }}
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro modal(id,bg,title,content) %}
+    <!-- Info modal -->
+    <div id="{{ id }}" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header {{ bg }}">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">{{ title }}</h6>
+                </div>
+
+                <div class="modal-body">
+                {% autoescape false %}
+                    {{ content }}
+                {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /info modal -->
+{% endmacro %}
+

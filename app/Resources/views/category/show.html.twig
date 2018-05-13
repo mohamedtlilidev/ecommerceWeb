@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Category</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ category.id }}</td>
+            </tr>
+            <tr>
+                <th>Namefr</th>
+                <td>{{ category.nameFr }}</td>
+            </tr>
+            <tr>
+                <th>Nameen</th>
+                <td>{{ category.nameEn }}</td>
+            </tr>
+            <tr>
+                <th>Bgpicture</th>
+                <td>{{ category.bgPicture }}</td>
+            </tr>
+            <tr>
+                <th>Rank</th>
+                <td>{{ category.rank }}</td>
+            </tr>
+            <tr>
+                <th>Ispublished</th>
+                <td>{% if category.isPublished %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Createdby</th>
+                <td>{{ category.createdBy }}</td>
+            </tr>
+            <tr>
+                <th>Createdon</th>
+                <td>{% if category.createdOn %}{{ category.createdOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedon</th>
+                <td>{% if category.updatedOn %}{{ category.updatedOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('category_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

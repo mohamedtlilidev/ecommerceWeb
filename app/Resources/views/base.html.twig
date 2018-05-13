@@ -1,0 +1,109 @@
+{% import "macros/macros.html.twig" as macros %}
+{% import "macros/scripts.html.twig" as scripts %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Admin Hamila!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+          type="text/css">
+    <link href="{{ asset('assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/core.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/components.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/colors.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/jquery.tree-multiselect.min.css') }}" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    <!-- Core JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/pace.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/core/libraries/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/blockui.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/jquery.tree-multiselect.min.js') }}"></script>
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <!-- /core JS files -->
+
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/visualization/d3/d3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/visualization/d3/d3_tooltip.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/ui/nicescroll.min.js') }}"></script>
+
+
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/notifications/pnotify.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/notifications/noty.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/core/app.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/pages/components_notifications_other.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/pages/form_multiselect.js') }}"></script>
+
+
+    <!--<script type="text/javascript" src="{{ asset('assets/js/pages/dashboard.js') }}"></script>-->
+    <script type="text/javascript" src="{{ asset('assets/js/pages/layout_fixed_custom.js') }}"></script>
+    <!-- /theme JS files -->
+
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/media/fancybox.min.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_basic.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pages/components_thumbnails.js') }}"></script>
+    <!-- /theme JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/article/admin-product.js') }}"></script>
+    <!-- Theme JS files -->
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/validation/validate.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/inputs/touchspin.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/switch.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pages/form_validation.js') }}"></script>
+    <!-- /theme JS files -->
+    <script type="text/javascript"
+            src="{{ asset('assets/js/plugins/tables/datatables/extensions/row_reorder.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_extension_row_reorder.js') }}"></script>
+
+    {% if app.request.attributes.get('_route') in ['dashboard'] %}
+        {{ scripts.chartBasicArea() }}
+    {% endif %}
+    {% if app.request.attributes.get('_route') in ['article_edit','article_new'] %}
+    {{ scripts.wysihtml5() }}
+    {% endif %}
+
+</head>
+<body class="navbar-top">
+
+{% include 'topmenu.html.twig' %}
+<!-- Page container -->
+<div class="page-container">
+
+    <!-- Page content -->
+    <div class="page-content">
+        {% include 'leftmenu.html.twig' %}
+
+        {% block body %}{% endblock %}
+    </div>
+    <!-- /page content -->
+</div>
+<!-- /page container -->
+
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

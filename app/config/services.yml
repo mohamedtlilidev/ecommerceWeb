@@ -1,0 +1,108 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+    user_manager_class: AppBundle\Services\UserManager
+    session_user_manager_class: AppBundle\Services\SessionUserManager
+    family_manager_class: AppBundle\Services\FamilyManager
+    article_manager_class: AppBundle\Services\ArticleManager
+    article_file_uploder: AppBundle\FileUploader
+    category_manager_class: AppBundle\Services\CategoryManager
+    subcategory_manager_class: AppBundle\Services\SubCategoryManager
+    unity_manager_class: AppBundle\Services\UnityManager
+    brand_manager_class: AppBundle\Services\BrandManager
+    cansultant_manager_class: AppBundle\Services\CansulardNumberListManager
+    mailer_manager_class: AppBundle\Services\MailerManager
+    order_manager_class: AppBundle\Services\OrderManager
+    order_item_manager_class: AppBundle\Services\OrderItemManager
+    order_status_manager_class: AppBundle\Services\OrderStatusManager
+    method_payement_manager_class: AppBundle\Services\PaymentmethodManager
+    country_manager_class: AppBundle\Services\CountryManager
+    address_manager_class: AppBundle\Services\AddressManager
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+      datatable.service:
+          class: AppBundle\Services\DataTableService
+          arguments: [ '@doctrine.orm.entity_manager','@request_stack' ]
+
+      user_manager:
+          class: "%user_manager_class%"
+          arguments: ['@doctrine.orm.entity_manager', 'AppBundle\Entity\User']
+
+      article_manager:
+              class: "%article_manager_class%"
+              arguments: ['@doctrine.orm.entity_manager', 'AppBundle\Entity\Article']
+
+      session_manager:
+          class: "%session_user_manager_class%"
+          arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      family_manager:
+              class: "%family_manager_class%"
+              arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      category_manager:
+                  class: "%category_manager_class%"
+                  arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      subcategory_manager:
+                      class: "%subcategory_manager_class%"
+                      arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      unity_manager:
+                      class: "%unity_manager_class%"
+                      arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      brand_manager:
+                      class: "%brand_manager_class%"
+                      arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      cansultant_manager:
+                      class: "%cansultant_manager_class%"
+                      arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      order_manager:
+                      class: "%order_manager_class%"
+                      arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      order_item_manager:
+                      class: "%order_item_manager_class%"
+                      arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      order_status_manager:
+                          class: "%order_status_manager_class%"
+                          arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+
+      method_payement_manager:
+                              class: "%method_payement_manager_class%"
+                              arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+      country_manager:
+                                  class: "%country_manager_class%"
+                                  arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+      address_manager:
+                                        class: "%address_manager_class%"
+                                        arguments: ['@doctrine.orm.entity_manager', '@security.token_storage']
+      mail_send_manager:
+                  class: "%mailer_manager_class%"
+                  arguments: ['@swiftmailer.mailer.default','@templating']
+
+      file_uploder_manager:
+              class: "%article_file_uploder%"
+              arguments: ['%img_dir%']
+
+      app.doctrine_brochure_listener:
+              class: AppBundle\EventListener\BrochureUploadListener
+              arguments: ['@file_uploder_manager','%img_dir%']
+              tags:
+                  - { name: doctrine.event_listener, event: prePersist }
+                  - { name: doctrine.event_listener, event: preUpdate }
+                  - { name: doctrine.event_listener, event: postPersist }
+
+      app.activity.service:
+              class: AppBundle\EventListener\ActivityListener
+              arguments: ['@security.token_storage','@doctrine.orm.entity_manager']
+              tags:
+                  - { name: kernel.event_listener, event: kernel.controller, method: onCoreController }

@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- Main content -->
+    <div class="content-wrapper">
+
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Utilisateur</span> -
+                        Liste</h4>
+                </div>
+
+
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Utilisateurs</li>
+                </ul>
+            </div>
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+            {% include 'messages.html.twig' %}
+            <!-- Basic initialization -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Liste des utilisateurs</h5>
+
+
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li>
+                                {% if employee %}
+                                    <a class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"
+                                       href="{{ path('fos_user_registration_register') }}"
+                                       title="Ajouter un nouveau employé"><i
+                                                class="icon-plus3"></i></a>
+                                {% endif %}
+                            </li>
+                            <!--li><a data-action="reload"></a></li-->
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <table class="table datatable-row-full">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Nom et prénom</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Interdit</th>
+                        <th class="text-center">{% if employee %}Groupe{% else %}Type{% endif %}</th>
+                        <th class="text-center">Actif</th>
+                        <th class="text-center">Date de création</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for user in users %}
+
+                        <tr>
+                            <td class="text-center user_name">{% if (user.firstName or user.lastName) %}{{ user.firstName }}&nbsp;{{ user.lastName }}{% else %}{{ user.username }}{% endif %}</td>
+
+                            <td class="text-center">{{ user.email }}</td>
+
+                            <td class="text-center">{% if user.state %}<span
+                                        class="label label-success">Non</span>{% else %}<span
+                                        class="label label-danger">Oui</span>{% endif %}</td>
+                            <td class="text-center">
+                                {% if employee %}
+                                    {% for group in user.groups %}
+                                        <span class="label label-info">{{ group.name }}</span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="label label-info">{% if user.type==2 %}Diplomate{% else %}Client{% endif %}</span>
+                                {% endif %}
+                            </td>
+
+                            <td class="text-center">
+                                {% if user.isEnabled %}
+                                    <label class="label-success label"><a href="{{ path('user_enable', {'id': user.id }) }}" title="Bloqué"><i class="icon-checkmark text-blank"></i></a></label>
+                                {% else %}
+
+                                    <label class="label-danger label"><a href="{{ path('user_enable', {'id': user.id }) }}" title="Débloqué"><i class="icon-cross3 text-blank"></i></a></label>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{% if user.createdOn %}{{ user.createdOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td class="text-center">
+
+                                <ul class="icons-list icons-list-extended text-nowrap">
+                                    {% if employee %}
+                                        <li><a href="#" data-popup="tooltip" title="Supprimer" data-toggle="modal"
+                                               data-target="#deleteModal"
+                                               data-path-delete="{{ path('user_admin_delete', {'id': user.id }) }}"
+                                               data-name-item="{{ user.username }}"><i
+                                                        class="icon-cross2 text-danger"></i></a></li>
+                                    {% endif %}
+                                    {% if not employee %}
+                                        <li><a href="{{ path('user_new', {'id': user.id }) }}" title="Edit"><i
+                                                        class="icon-file-text2"></i></a></li>
+                                    {% else %}
+                                        <li><a href="{{ path('fos_user_profile_admin_edit', {'id': user.id }) }}"
+                                               title="Edit"><i
+                                                        class="icon-file-text2"></i></a></li>
+                                    {% endif %}
+
+                                    <!--li><a href="#" data-popup="tooltip" title="Video" data-toggle="modal" data-target="#video"><i class="icon-video-camera"></i></a></li-->
+                                </ul>
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+            <!-- /basic initialization -->
+            <div class="modal fade" id="deleteModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Supprimer le produit</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Etes vous sure de bien vouloir supprimer l'utilisateur ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="deleteAction" type="button" class="btn btn-danger">Valider</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+
+{% endblock %}
+

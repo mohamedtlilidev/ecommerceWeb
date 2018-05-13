@@ -1,0 +1,33 @@
+
+app_order_status:
+    resource: "@AppBundle/Controller/OrderStatusController.php"
+    type:     annotation
+
+
+admin_user:
+    resource: "@AdminUserBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+# app/config/routing.yml
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_user_resetting:
+    resource: "@AdminUserBundle/Resources/config/resetting.xml"
+    prefix: /resetting
+
+fos_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+    prefix: /group
+fos_user_profile:
+    resource: "@AdminUserBundle/Resources/config/profile.xml"
+    prefix: /profile
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc

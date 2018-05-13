@@ -1,0 +1,29 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <div class="panel panel-body login-form">
+        <div class="text-center">
+            <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+            <h5 class="content-group">Mot de passe oubliée</h5>
+
+        </div>
+        <div class="form-group login-options">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group login-options">
+            <div class="row">
+                <div class="col-sm-12  text-center">
+                    <a href="{{ path('fos_user_security_login') }}">Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

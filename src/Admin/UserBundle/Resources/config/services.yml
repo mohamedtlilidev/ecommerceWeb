@@ -1,0 +1,4 @@
+services:
+#    fos_user.mailer:
+#        class: Admin\UserBundle\Mailer\Mailer
+#        arguments: ["@swiftmailer.mailer.default","@router","@templating", {from_email: { reseting: %fos_user.resetting.email.from_email%}} ]

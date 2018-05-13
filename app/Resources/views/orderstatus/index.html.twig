@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Pays</span> - Liste</h4>
+                </div>
+
+
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="{{ path('dashboard') }}"><i class="icon-home2 position-left"></i> Home</a></li>
+
+                    <li class="active">Pays</li>
+                </ul>
+
+
+            </div>
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+            {% include 'messages.html.twig' %}
+            <!-- Basic initialization -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Pays</h5>
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li>
+                                <a class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"
+                                   href="{{ path('orderstatus_new') }}" title="Ajouter un status"><i
+                                            class="icon-plus3"></i></a></li>
+                            <!--li><a data-action="reload"></a></li-->
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                </div>
+
+                <table class="table datatable-row-full">
+                    <thead>
+                    <tr>
+
+                        <th class="text-center">Id</th>
+                        <th class="text-center">Nom</th>
+                        <th class="text-center">Par default</th>
+                        <th class="text-center">Par default Annulé</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for orderStatus in orderStatuses %}
+                        <tr>
+                            <td class="text-center">{{ orderStatus.id }}</td>
+                            <td class="text-center">{{ orderStatus.name }}</td>
+                            <td class="text-center">{% if orderStatus.defaults %}
+                                    <label class="label-success label"><a href="{{ path('orderstatus_default', {'id': orderStatus.id }) }}" title="Oui"><i
+                                                    class="icon-checkmark text-blank" ></i></a></label>
+                                {% else %}
+                                    <label class="label-danger label"><a href="{{ path('orderstatus_default', {'id': orderStatus.id }) }}" title="Oui"><i
+                                                    class="icon-cross3 text-blank" ></i></a></label>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{% if orderStatus.defaultCancel %}
+                                    <label class="label-success label"><a href="{{ path('orderstatus_default_cancel', {'id': orderStatus.id }) }}" title="Oui"><i
+                                                    class="icon-checkmark text-blank" ></i></a></label>
+                                {% else %}
+                                    <label class="label-danger label"><a href="{{ path('orderstatus_default_cancel', {'id': orderStatus.id }) }}" title="Oui"><i
+                                                    class="icon-cross3 text-blank" ></i></a></label>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <ul class="icons-list icons-list-extended text-nowrap">
+                                    <li><a href="#" data-popup="tooltip" title="Supprimer" data-toggle="modal"
+                                           data-target="#deleteModal"
+                                           data-path-delete="{{ path('orderstatus_delete', {'id': orderStatus.id }) }}"
+                                           data-name-item="{{ orderStatus.name }}"><i class="icon-cross2 text-danger"></i></a>
+                                    </li>
+                                    <li><a href="{{ path('orderstatus_new', {'id': orderStatus.id }) }}" title="Edit"><i
+                                                    class="icon-file-text2"></i></a></li>
+
+
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+            <!-- /basic initialization -->
+            <div class="modal fade" id="deleteModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pays</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Etes vous sure de bien vouloir supprimer ce status?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="deleteAction" type="button" class="btn btn-danger">Valider</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+
+
+{% endblock %}
+

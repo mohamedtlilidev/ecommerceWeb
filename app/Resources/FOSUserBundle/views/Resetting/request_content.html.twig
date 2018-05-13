@@ -1,0 +1,34 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="panel panel-body login-form">
+    <div class="text-center">
+        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
+        <h5 class="content-group">Mot de passe oubliée</h5>
+
+    </div>
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="form-validate">
+
+        <div class="form-group">
+            <div class="row">
+                <label for="username"
+                       class="col-md-12 control-label required">{{ 'resetting.request.username'|trans }}</label>
+                <div class="col-md-12">
+                    <input type="text" id="username" class="form-control" name="username" required="required"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn bg-blue btn-block">{{ 'resetting.request.submit'|trans }}<i
+                        class="icon-arrow-right14 position-right"></i></button>
+
+        </div>
+        <div class="form-group login-options">
+            <div class="row">
+                <div class="col-sm-12  text-center">
+                    <a href="{{ path('fos_user_security_login') }}">Retour</a>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+

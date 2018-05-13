@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <div class="page-title">
+                    <h4><i class="icon-arrow-left52 position-left"></i> <span
+                                class="text-semibold">Unité de vente</span> - Liste</h4>
+                </div>
+
+
+            </div>
+
+            <div class="breadcrumb-line">
+                <ul class="breadcrumb">
+                    <li><a href="index.html"><i class="icon-home2 position-left"></i> Home</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Dashboard</li>
+                </ul>
+
+                <!--ul class="breadcrumb-elements">
+                    <li><a href="#"><i class="icon-comment-discussion position-left"></i> Support</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-gear position-left"></i>
+                            Settings
+                            <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#"><i class="icon-user-lock"></i> Account security</a></li>
+                            <li><a href="#"><i class="icon-statistics"></i> Analytics</a></li>
+                            <li><a href="#"><i class="icon-accessibility"></i> Accessibility</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="icon-gear"></i> All settings</a></li>
+                        </ul>
+                    </li>
+                </ul-->
+            </div>
+        </div>
+        <!-- /page header -->
+
+
+        <!-- Content area -->
+        <div class="content">
+            {% include 'messages.html.twig' %}
+            <!-- Basic initialization -->
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Liste des devises</h5>
+
+
+                    <div class="heading-elements">
+                        <ul class="icons-list">
+                            <li>
+                                <a class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom"
+                                   href="{{ path('brand_new') }}" title="Ajouter une famille"><i class="icon-plus3"></i></a>
+                            </li>
+                            <!--li><a data-action="reload"></a></li-->
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="panel-body">
+
+                </div>
+
+                <table class="table datatable-row-full">
+                    <thead>
+                    <tr>
+
+                        <th class="text-center">#</th>
+                        <th class="text-center">Brand</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for brand in brands %}
+                        <tr>
+                            <td class="text-center">{{ brand.id }}</td>
+                            <td class="text-center">{{ brand.brand }}</td>
+
+                            <td class="text-center">
+                                <ul class="icons-list icons-list-extended text-nowrap">
+                                    <li><a href="#" data-popup="tooltip" title="Supprimer" data-toggle="modal"
+                                           data-target="#deleteModal"
+                                           data-path-delete="{{ path('brand_delete', {'id': brand.id }) }}"
+                                           data-name-item="{{ brand.brand }}"><i class="icon-cross2 text-danger"></i></a>
+                                    </li>
+                                    <li><a href="{{ path('brand_new', {'id': brand.id }) }}" title="Edit"><i
+                                                    class="icon-file-text2"></i></a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+            <!-- /basic initialization -->
+            <div class="modal fade" id="deleteModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Nom de la devise</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Etes vous sure de bien vouloir supprimer cette devise ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a id="deleteAction" type="button" class="btn btn-danger">Valider</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% include 'footer.html.twig' %}
+
+        </div>
+        <!-- /content area -->
+
+    </div>
+    <!-- /main content -->
+
+
+{% endblock %}
